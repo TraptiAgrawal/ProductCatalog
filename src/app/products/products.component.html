@@ -8,19 +8,26 @@
         Filter By
       </div>
       <div class="col-md-4">
-        <input type="text" [(ngModel)]="listFilter" />
+        <input type="text" [(ngModel)]="listFilter" placeholder="Product Name" />
+        <input type="text" [(ngModel)]="codeFilter" placeholder="Product Code" />
+        
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
-        <h3>Filtered By : {{listFilter}}</h3>
+        <h5><span>Filtered By : {{listFilter}}</span>
+        <span>Code Filtered By : {{codeFilter}}</span></h5>
       </div>
-
+      <div class="col=md-6">
+        
+        <button class="btn btn-primary" (click)="toggleGridView()">{{showGridView?"Show List View":"Show Grid View"}}</button>
+        <span class="ratingHover">{{ratingOnHover}}</span>
+      </div>
     </div>
-    <div class="table responsive" *ngIf ="products && products.length">
+<div class="table responsive" *ngIf ="products && products.length" id="list-view">
       <table class="table">
         <thead>
-        <tr>
+        <tr *ngIf="!showGridView">
           <th><button class="btn btn-success" (click)="toggleImgDisp()">{{showImage?"Hide Image":"Show Image"}}</button></th>
           <th>Product</th>
           <th>Code</th>
@@ -30,17 +37,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor='let product of products | ProductFilter :listFilter' >
+        <tr class={{gridRowClass}} *ngFor='let product of products | ProductFilter:listFilter | FilterByCode :codeFilter' >
           <td><img *ngIf="showImage" [src]="product.imageUrl" [width]="imageWidth"></td>
           <td>{{product.productName }}</td>
           <td>{{product.productCode | lowercase}}</td>
-          <td>{{product.releaseDate | date}}</td>
+          <td>{{product.releaseDate | date : 'dd-MMM-yyyy'}}</td>
           <td>{{product.price}}</td>
-          <td><app-star [rating]="product.starRating"></app-star></td>
+          <td><app-star [rating]="product.starRating" (ratingToDisp)="dispRating($event)"></app-star></td>
         </tr>
         </tbody>
       </table>
     </div>
-  </div>
+  
+ </div>
 
 </div>
