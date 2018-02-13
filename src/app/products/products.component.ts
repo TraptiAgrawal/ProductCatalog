@@ -7,20 +7,21 @@ import { ProductsService } from './products.service';
 @Component({
   selector : 'app-product',
   templateUrl : './products.component.html',
-  styleUrls : ['./products.component.css']
+  styleUrls : ['./products.component.css'],
+  
 })
 export class ProductComponent implements OnInit
 {
    productListTitle : String ="Product Catalog";
    listFilter : String ;
    codeFilter :String;
-   showImage : boolean = false;
+   showImage : boolean = true;
    imageWidth : number = 50;
    showGridView :boolean = false;
    gridRowClass :string;
    ratingOnHover :string;
    errMessage :string;
-   
+
    toggleGridView():void {
      this.showGridView = ! this.showGridView;
      this.gridRowClass= this.showGridView ? "grid-row" :"";
